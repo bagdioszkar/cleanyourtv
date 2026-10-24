@@ -45,6 +45,11 @@ jobs:
             echo "::error::README.md and examples/README.md are generated from examples/*/tv.json. A maintainer runs python3 tools/gen_tables.py on main and commits the result; contributors never need to."
             exit 1
           }
+      - name: Upload Launcher APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: cleanyourtv-launcher
+          path: "**/*.apk"
 
   launcher:
     name: Launcher build and unit tests
