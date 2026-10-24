@@ -288,12 +288,18 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (card != null && !card.component.equals(component)) continue;   // the card stands in for this tile
             // Same cleaner as the card prompt: an app label with a bidi override or line separator must not
             // redraw the tile name as something else (#117).
-            String label = card != null ? card.label : Cards.cleanLabel(
-                    appLabels.containsKey(pkg) ? appLabels.get(pkg) : String.valueOf(ri.loadLabel(pm)), pkg);
+            String label;
+            if ("com.github.damontecres.wholphin".equals(pkg)) {
+                label = "VorteX";
+            } else {
+                label = card != null ? card.label : Cards.cleanLabel(
+                        appLabels.containsKey(pkg) ? appLabels.get(pkg) : String.valueOf(ri.loadLabel(pm)), pkg);
+            }
             if (!seen.add(pkg + '\n' + label)) continue;
             Drawable banner = null;
-            // uniform_tiles draws the icon, so an app's banner is never loaded. A module card keeps its banner.
-            if (!(uniformTiles && card == null)) {
+            if ("com.github.damontecres.wholphin".equals(pkg)) {
+                banner = ctx.getDrawable(R.drawable.vortex_banner);
+            } else if (!(uniformTiles && card == null)) {
                 banner = bundledBanner(appBanners.get(pkg));
                 if (banner == null) banner = loadBanner(pm, ri);
             }
